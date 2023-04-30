@@ -1,18 +1,14 @@
 import CharacterRole from "./characterRoles";
 import CharacterSkills from "./characterSkills";
 import CharacterStats from "./characterStats";
+import CharacterArmor from "./characterArmor";
 
-const stats = new CharacterStats(8, 8, 8, 8, 8, 8, 8, 8, 8, 8);
-const role = CharacterRole['SOLO'];
-const skills = CharacterSkills;
-
-// const hitPoints: number = 10 + (5 * Math.ceil((stats.BODY + stats.WILL) / 2));
-// const humanity: number = 10 * stats.EMP;
-
-skills.ACCOUNTING.setSkillRank(2)
+const armor = new CharacterArmor;
+armor.setBodyArmor('Body Armor', 'LIGHTARMOR', 11, 0);
+armor.setHeadArmor('Head Armor', 'LIGHTARMOR', 11, 0);
+armor.setShield('Shield', 'SHIELD', 11, 0);
 
 /**
- * @todo Criar classe de Armor e SP
  * @todo Descobrir uma maneira de implementar a mudança de estado dos STATS
  * @todo Documentar classes
  */
@@ -21,12 +17,16 @@ class Character {
     public stats: CharacterStats;
     public hitPoints: number;
     public humanity: number;
+    public skills: object;
+    public armor: object;
 
     constructor(role: string) {
         this.role = CharacterRole[role as keyof typeof CharacterRole];
         this.stats = new CharacterStats;
         this.hitPoints = this.setHitPoints();
         this.humanity = this.setHumanity();
+        this.skills = CharacterSkills;
+        this.armor = new CharacterArmor;
     }
 
     setHitPoints() {
@@ -41,5 +41,5 @@ class Character {
 const char = new Character('SOLO');
 
 export default {
-    skills, stats, role, /*hitPoints, humanity,*/ char
+    char, armor
 }
