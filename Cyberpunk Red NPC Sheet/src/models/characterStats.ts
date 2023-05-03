@@ -26,4 +26,40 @@ export default class CharacterStats {
     setIntStat(int: number) {
         this.INT = int;
     }
+
+    setRefStat(ref: number) {
+        this.REF = ref;
+    }
+
+    setDexStat(dex: number) {
+        this.DEX = dex;
+    }
+
+    setTechStat(tech: number) {
+        this.TECH = tech;
+    }
+
+    setCoolStat(cool: number) {
+        this.COOL = cool;
+    }
+
+    setWillStat(will: number) {
+        this.WILL = will;
+    }
+
+    setLuckStat(luck: number) {
+        this.LUCK = luck;
+    }
+
+    setMoveStat(move: number) {
+        this.MOVE = move;
+    }
+
+    setBodyStat(body: number) {
+        this.BODY = body;
+    }
+
+    setEmpStat(emp: number) {
+        this.EMP = emp;
+    }
 }

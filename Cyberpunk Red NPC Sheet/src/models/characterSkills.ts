@@ -3,7 +3,9 @@ class CharacterSkillStructure {
     public baseStat: string;
     public type: string;
     public dificulty: number;
-    public rank?: number;
+    public rank!: number;
+    public baseStatRank!: number;
+    public baseTotal!: number;
 
     constructor(skill: string, baseStat: string, type: string, dificulty: number, rank: number = 0) {
         this.skill = skill;
@@ -17,8 +19,20 @@ class CharacterSkillStructure {
         this.rank = rank;
     }
 
+    setBaseStatRank(statRank: number) {
+        this.baseStatRank = statRank;
+    }
+
+    setSkillBaseTotalStat() {
+        this.baseTotal = this.rank + this.baseStatRank;
+    }
+
     getSkillRank() {
-        return this.rank
+        return this.rank;
+    }
+
+    getSkillBaseTotal() {
+        return this.baseTotal;
     }
 }
 
