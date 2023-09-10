@@ -3,11 +3,12 @@ import CharacterSkills from "./characterSkills";
 import CharacterStats from "./characterStats";
 import CharacterArmor from "./characterArmor";
 import ArmorHandler from "@/handlers/armorHandler";
+import DamageHandler from "@/handlers/damageHandler";
 
 /**
  * @todo Documentar classes
  */
-class Character {
+export default class Character {
     public role!: object;
     public stats: CharacterStats;
     public hitPoints!: number;
@@ -33,93 +34,97 @@ class Character {
         this.humanity = 10 * this.stats.EMP;
     }
 
-    setSkillRank(skill: string, rank: number) {
-        this.skills[skill as keyof typeof CharacterSkills].setSkillRank(rank);
+    getTotalHitPoints() {
+        return 10 + (5 * Math.ceil((this.stats.BODY + this.stats.WILL) / 2));
     }
 
-    setAllIntSkills() {
-        Object.keys(this.skills).forEach(skill => {
-            if (this.skills[skill as keyof typeof CharacterSkills].baseStat === 'INT') {
-                this.skills[skill as keyof typeof CharacterSkills].setBaseStatRank(this.stats.INT);
-            }
-        })
+    getTotalHumanity() {
+        return 10 * this.stats.EMP;
     }
 
-    setAllRefSkills() {
-        Object.keys(this.skills).forEach(skill => {
-            if (this.skills[skill as keyof typeof CharacterSkills].baseStat === 'REF') {
-                this.skills[skill as keyof typeof CharacterSkills].setBaseStatRank(this.stats.REF);
-            }
-        })
-    }
+    // setSkillRank(skill: string, rank: number) {
+    //     this.skills[skill as keyof typeof CharacterSkills].setSkillRank(rank);
+    // }
 
-    setAllDexSkills() {
-        Object.keys(this.skills).forEach(skill => {
-            if (this.skills[skill as keyof typeof CharacterSkills].baseStat === 'DEX') {
-                this.skills[skill as keyof typeof CharacterSkills].setBaseStatRank(this.stats.DEX);
-            }
-        })
-    }
+    // setAllIntSkills() {
+    //     Object.keys(this.skills).forEach(skill => {
+    //         if (this.skills[skill as keyof typeof CharacterSkills].baseStat === 'INT') {
+    //             this.skills[skill as keyof typeof CharacterSkills].setBaseStatRank(this.stats.INT);
+    //         }
+    //     })
+    // }
 
-    setAllTechSkills() {
-        Object.keys(this.skills).forEach(skill => {
-            if (this.skills[skill as keyof typeof CharacterSkills].baseStat === 'TECH') {
-                this.skills[skill as keyof typeof CharacterSkills].setBaseStatRank(this.stats.TECH);
-            }
-        })
-    }
+    // setAllRefSkills() {
+    //     Object.keys(this.skills).forEach(skill => {
+    //         if (this.skills[skill as keyof typeof CharacterSkills].baseStat === 'REF') {
+    //             this.skills[skill as keyof typeof CharacterSkills].setBaseStatRank(this.stats.REF);
+    //         }
+    //     })
+    // }
 
-    setAllCoolSkills() {
-        Object.keys(this.skills).forEach(skill => {
-            if (this.skills[skill as keyof typeof CharacterSkills].baseStat === 'COOL') {
-                this.skills[skill as keyof typeof CharacterSkills].setBaseStatRank(this.stats.COOL);
-            }
-        })
-    }
+    // setAllDexSkills() {
+    //     Object.keys(this.skills).forEach(skill => {
+    //         if (this.skills[skill as keyof typeof CharacterSkills].baseStat === 'DEX') {
+    //             this.skills[skill as keyof typeof CharacterSkills].setBaseStatRank(this.stats.DEX);
+    //         }
+    //     })
+    // }
 
-    setAllWillSkills() {
-        Object.keys(this.skills).forEach(skill => {
-            if (this.skills[skill as keyof typeof CharacterSkills].baseStat === 'WILL') {
-                this.skills[skill as keyof typeof CharacterSkills].setBaseStatRank(this.stats.WILL);
-            }
-        })
-    }
+    // setAllTechSkills() {
+    //     Object.keys(this.skills).forEach(skill => {
+    //         if (this.skills[skill as keyof typeof CharacterSkills].baseStat === 'TECH') {
+    //             this.skills[skill as keyof typeof CharacterSkills].setBaseStatRank(this.stats.TECH);
+    //         }
+    //     })
+    // }
 
-    setAllEmpSkills() {
-        Object.keys(this.skills).forEach(skill => {
-            if (this.skills[skill as keyof typeof CharacterSkills].baseStat === 'EMP') {
-                this.skills[skill as keyof typeof CharacterSkills].setBaseStatRank(this.stats.EMP);
-            }
-        })
-    }
+    // setAllCoolSkills() {
+    //     Object.keys(this.skills).forEach(skill => {
+    //         if (this.skills[skill as keyof typeof CharacterSkills].baseStat === 'COOL') {
+    //             this.skills[skill as keyof typeof CharacterSkills].setBaseStatRank(this.stats.COOL);
+    //         }
+    //     })
+    // }
 
-    setSkillBaseTotal(skill: string) {
-        this.skills[skill as keyof typeof CharacterSkills].setSkillBaseTotalStat();
-    }
+    // setAllWillSkills() {
+    //     Object.keys(this.skills).forEach(skill => {
+    //         if (this.skills[skill as keyof typeof CharacterSkills].baseStat === 'WILL') {
+    //             this.skills[skill as keyof typeof CharacterSkills].setBaseStatRank(this.stats.WILL);
+    //         }
+    //     })
+    // }
+
+    // setAllEmpSkills() {
+    //     Object.keys(this.skills).forEach(skill => {
+    //         if (this.skills[skill as keyof typeof CharacterSkills].baseStat === 'EMP') {
+    //             this.skills[skill as keyof typeof CharacterSkills].setBaseStatRank(this.stats.EMP);
+    //         }
+    //     })
+    // }
+
+    // setSkillBaseTotal(skill: string) {
+    //     this.skills[skill as keyof typeof CharacterSkills].setSkillBaseTotalStat();
+    // }
 }
 
-const char = new Character();
-char.setCharacterRole('ROCKERBOY');
-char.armor.setBodyArmor('Body Armor', 'LIGHT_ARMOR', 11, 0);
-char.armor.setHeadArmor('Head Armor', 'LIGHT_ARMOR', 11, 0);
-char.stats.setBodyStat(12);
-char.stats.setWillStat(8);
-char.stats.setEmpStat(5);
-char.stats.setIntStat(4);
-char.stats.setTechStat(8);
-char.setHumanity();
-char.setHitPoints();
-char.setAllWillSkills();
-char.setAllIntSkills();
-char.setAllEmpSkills();
-char.setAllTechSkills();
-char.setSkillRank('LAND_VEHICLE_TECH', 6);
-char.setSkillBaseTotal('LAND_VEHICLE_TECH');
+// const char = new Character();
+// char.setCharacterRole('ROCKERBOY');
+// char.armor.setBodyArmor('Body Armor', 'LIGHT_ARMOR', 11, 0);
+// char.armor.setHeadArmor('Head Armor', 'LIGHT_ARMOR', 11, 0);
+// char.stats.setBodyStat(12);
+// char.stats.setWillStat(8);
+// char.stats.setEmpStat(5);
+// char.stats.setIntStat(4);
+// char.stats.setTechStat(8);
+// char.setHumanity();
+// char.setHitPoints();
+// char.setAllWillSkills();
+// char.setAllIntSkills();
+// char.setAllEmpSkills();
+// char.setAllTechSkills();
+// char.setSkillRank('LAND_VEHICLE_TECH', 6);
+// char.setSkillBaseTotal('LAND_VEHICLE_TECH');
 
-// console.log(char.skills.LAND_VEHICLE_TECH.getSkillBaseTotal());
-console.log(ArmorHandler.reduceTotalArmor(char.armor.getBodyArmorSP()!, 2));
-console.log(ArmorHandler.ignoreHalfArmor(char.armor.getBodyArmorSP()!, 4, true));
-
-export default {
-    char
-}
+// console.log(ArmorHandler.reduceTotalArmor(char.armor.getBodyArmorSP()!, 4));
+// console.log(DamageHandler.reduceTotalHP(char.hitPoints, [10, 10, 10, 10], ArmorHandler.reduceTotalArmor(char.armor.getBodyArmorSP()!, 4), 4));
+// char.armor.updateBodyArmorSP(ArmorHandler.reduceTotalArmor(char.armor.getBodyArmorSP()!, 4).at(-1)!);

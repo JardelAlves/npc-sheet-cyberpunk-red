@@ -1,30 +1,47 @@
 import ArmorModel from "@/models/armorModel";
 
 export default class ArmorBuilder {
-    public armorName!: string;
-    public armorType!: string;
-    public armorSP!: number;
-    public armorPenalty!: number;
-    public armorHitPoints!: number;
+    private armorName!: string;
+    private armorType!: string;
+    private armorSP!: number;
+    private armorPenalty!: number;
+    private armorHitPoints!: number;
+
+    private ArmorBuilder() {}
 
     addArmorName(armorName: string) {
-        this.armorName = armorName
+        this.armorName = armorName;
+        return this;
     }
 
     addArmorType(armorType: string) {
-        this.armorType = armorType
+        this.armorType = armorType;
+        return this;
     }
 
     addArmorSP(armorSP: number) {
-        this.armorSP = armorSP
+        this.armorSP = armorSP;
+        return this;
     }
 
     addArmorPenalty(armorPenalty: number) {
-        this.armorPenalty = armorPenalty
+        this.armorPenalty = armorPenalty;
+        return this;
     }
 
     addHitPoints(hitPoints: number) {
         this.armorHitPoints = hitPoints;
+        return this;
+    }
+
+    setArmor(armorName: string, armorType: string, armorSP: number, armorPenalty: number) {
+        this.addArmorName(armorName).addArmorType(armorType).addArmorSP(armorSP).addArmorPenalty(armorPenalty);
+        return this;
+    }
+
+    setShield(armorName: string, armorType: string, armorHitPoints: number, armorPenalty: number) {
+        this.addArmorName(armorName).addArmorType(armorType).addArmorPenalty(armorPenalty).addHitPoints(armorHitPoints);
+        return this;
     }
 
     getArmor() {

@@ -5,11 +5,11 @@ export default class ArmorModel {
     public SP?: number;
     public HP?: number;
 
-    constructor(name: string, type: string,  penalty: number, SP?: number, HP?: number) {
+    constructor(name: string, type: string, penalty: number, SP?: number, HP?: number) {
         this.name = name;
         this.type = type;
-        this.SP = SP;
         this.penalty = penalty;
+        this.SP = SP;
         this.HP = HP;
     }
 }

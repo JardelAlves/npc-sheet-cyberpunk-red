@@ -1,35 +1,48 @@
 import type ArmorModel from "./armorModel";
 import ArmorBuilder from "@/handlers/armorBuilder";
 
-const armorBuilder = new ArmorBuilder();
 
 export default class CharacterArmor {
-    public body!: ArmorModel;
-    public head!: ArmorModel;
-    public shield?: ArmorModel;
+    private body!: ArmorModel;
+    private head!: ArmorModel;
+    private shield?: ArmorModel;
+    private armorBuilder: ArmorBuilder;
+
+    constructor() {
+        this.armorBuilder = new ArmorBuilder();
+    }
 
     setBodyArmor(armorName: string, armorType: string, armorSP: number, armorPenalty: number) {
-        armorBuilder.addArmorName(armorName);
-        armorBuilder.addArmorType(armorType);
-        armorBuilder.addArmorSP(armorSP);
-        armorBuilder.addArmorPenalty(armorPenalty);
-        this.body = armorBuilder.getArmor();
+        this.armorBuilder.setArmor(armorName, armorType, armorSP, armorPenalty);
+        this.body = this.armorBuilder.getArmor();
+        return this;
     }
 
     setHeadArmor(armorName: string, armorType: string, armorSP: number, armorPenalty: number) {
-        armorBuilder.addArmorName(armorName);
-        armorBuilder.addArmorType(armorType);
-        armorBuilder.addArmorSP(armorSP);
-        armorBuilder.addArmorPenalty(armorPenalty);
-        this.head = armorBuilder.getArmor();
+        this.armorBuilder.setArmor(armorName, armorType, armorSP, armorPenalty);
+        this.head = this.armorBuilder.getArmor();
+        return this;
     }
 
     setShield(armorName: string, armorType: string, armorHitPoints: number, armorPenalty: number) {
-        armorBuilder.addArmorName(armorName);
-        armorBuilder.addArmorType(armorType);
-        armorBuilder.addArmorPenalty(armorPenalty);
-        armorBuilder.addHitPoints(armorHitPoints);
-        this.shield = armorBuilder.getShield();
+        this.armorBuilder.setShield(armorName, armorType, armorHitPoints, armorPenalty);
+        this.shield = this.armorBuilder.getShield();
+        return this;
+    }
+
+    updateBodyArmorSP(SP: number) {
+        this.body.SP = SP;
+        return this;
+    }
+
+    updateHeadArmorSP(SP: number) {
+        this.head.SP = SP;
+        return this;
+    }
+
+    updateShieldHP(HP: number) {
+        this.shield!.HP = HP;
+        return this;
     }
 
     getBodyArmorSP() {
