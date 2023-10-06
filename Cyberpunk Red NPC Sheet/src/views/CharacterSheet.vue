@@ -320,67 +320,67 @@ export default {
     },
 
     watch: {
-        textFieldINT(newValue) {
+        textFieldINT(newValue: number) {
             if (newValue === '') this.textFieldINT = 0
             this.char.stats.setIntStat(parseInt(newValue))
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        textFieldREF(newValue) {
+        textFieldREF(newValue: number) {
             if (newValue === '') this.textFieldREF = 0
             this.char.stats.setRefStat(parseInt(newValue))
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        textFieldDEX(newValue) {
+        textFieldDEX(newValue: number) {
             if (newValue === '') this.textFieldDEX = 0
             this.char.stats.setDexStat(parseInt(newValue))
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        textFieldTECH(newValue) {
+        textFieldTECH(newValue: number) {
             if (newValue === '') this.textFieldTECH = 0
             this.char.stats.setTechStat(parseInt(newValue))
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        textFieldCOOL(newValue) {
+        textFieldCOOL(newValue: number) {
             if (newValue === '') this.textFieldCOOL = 0
             this.char.stats.setCoolStat(parseInt(newValue))
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        textFieldWILL(newValue) {
+        textFieldWILL(newValue: number) {
             if (newValue === '') this.textFieldWILL = 0
             this.char.stats.setWillStat(parseInt(newValue))
             this.char.setHitPoints()
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        textFieldLUCK(newValue) {
+        textFieldLUCK(newValue: number) {
             if (newValue === '') this.textFieldLUCK = 0
             this.char.stats.setLuckStat(parseInt(newValue))
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        textFieldMOVE(newValue) {
+        textFieldMOVE(newValue: number) {
             if (newValue === '') this.textFieldMOVE = 0
             this.char.stats.setMoveStat(parseInt(newValue))
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        textFieldBODY(newValue) {
+        textFieldBODY(newValue: number) {
             if (newValue === '') this.textFieldBODY = 0
             this.char.stats.setBodyStat(parseInt(newValue))
             this.char.setHitPoints()
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        textFieldEMP(newValue) {
+        textFieldEMP(newValue: number) {
             if (newValue === '') this.textFieldEMP = 0
             this.char.stats.setEmpStat(parseInt(newValue))
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        bodyArmor(newValue) {
+        bodyArmor(newValue: number) {
             this.char.armor.setBodyArmor('Body Armor', 'LIGHT_ARMOR', newValue, 0)
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        headArmor(newValue) {
+        headArmor(newValue: number) {
             this.char.armor.setHeadArmor('Head Armor', 'LIGHT_ARMOR', newValue, 0)
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        shield(newValue) {
+        shield(newValue: number) {
             this.char.armor.setShield('Shield', 'SHIELD', newValue, 0)
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
