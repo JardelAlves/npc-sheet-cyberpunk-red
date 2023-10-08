@@ -199,7 +199,7 @@ export default {
 
     data() {
         return {
-            textFieldINT: 0,
+            textFieldINT: 0 as number,
             textFieldREF: 0,
             textFieldDEX: 0,
             textFieldTECH: 0,
@@ -320,55 +320,54 @@ export default {
     },
 
     watch: {
-        textFieldINT(newValue: number) {
-            if (newValue === '') this.textFieldINT = 0
+        textFieldINT(newValue: string) {
+            if (newValue.length === 0) newValue = '0'
             this.char.stats.setIntStat(parseInt(newValue))
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        textFieldREF(newValue: number) {
-            if (newValue === '') this.textFieldREF = 0
+        textFieldREF(newValue: string) {
+            if (newValue.length === 0) newValue = '0'
             this.char.stats.setRefStat(parseInt(newValue))
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        textFieldDEX(newValue: number) {
-            if (newValue === '') this.textFieldDEX = 0
+        textFieldDEX(newValue: string) {
+            if (newValue.length === 0) newValue = '0'
             this.char.stats.setDexStat(parseInt(newValue))
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        textFieldTECH(newValue: number) {
-            if (newValue === '') this.textFieldTECH = 0
+        textFieldTECH(newValue: string) {
             this.char.stats.setTechStat(parseInt(newValue))
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        textFieldCOOL(newValue: number) {
-            if (newValue === '') this.textFieldCOOL = 0
+        textFieldCOOL(newValue: string) {
+            if (newValue.length === 0) newValue = '0'
             this.char.stats.setCoolStat(parseInt(newValue))
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        textFieldWILL(newValue: number) {
-            if (newValue === '') this.textFieldWILL = 0
+        textFieldWILL(newValue: string) {
+            if (newValue.length === 0) newValue = '0'
             this.char.stats.setWillStat(parseInt(newValue))
             this.char.setHitPoints()
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        textFieldLUCK(newValue: number) {
-            if (newValue === '') this.textFieldLUCK = 0
+        textFieldLUCK(newValue: string) {
+            if (newValue.length === 0) newValue = '0'
             this.char.stats.setLuckStat(parseInt(newValue))
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        textFieldMOVE(newValue: number) {
-            if (newValue === '') this.textFieldMOVE = 0
+        textFieldMOVE(newValue: string) {
+            if (newValue.length === 0) newValue = '0'
             this.char.stats.setMoveStat(parseInt(newValue))
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        textFieldBODY(newValue: number) {
-            if (newValue === '') this.textFieldBODY = 0
+        textFieldBODY(newValue: string) {
+            if (newValue.length === 0) newValue = '0'
             this.char.stats.setBodyStat(parseInt(newValue))
             this.char.setHitPoints()
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
-        textFieldEMP(newValue: number) {
-            if (newValue === '') this.textFieldEMP = 0
+        textFieldEMP(newValue: string) {
+            if (newValue.length === 0) newValue = '0'
             this.char.stats.setEmpStat(parseInt(newValue))
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
