@@ -1,0 +1,1 @@
+import{A as t,_ as s,r as n,o as a,c,a as r,b as _}from"./index-94d4aca5.js";const l={methods:{teste(){console.log(t.reduceFinalArmor(7,4,!0))}}};const i={class:"about"},u=_("h1",null,"This is an about page",-1);function d(p,m,b,f,h,e){const o=n("v-btn");return a(),c("div",i,[u,r(o,{onClick:e.teste},null,8,["onClick"])])}const A=s(l,[["render",d]]);export{A as default};
