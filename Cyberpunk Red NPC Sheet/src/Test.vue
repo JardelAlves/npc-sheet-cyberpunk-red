@@ -64,12 +64,9 @@
 import CharacterSheet from '@/views/CharacterSheet.vue'
 import { v4 as uuidv4 } from 'uuid'
 import { ref } from 'vue'
+import { defineComponent } from 'vue';
 
 const componentKey = ref(0)
-
-const forceRerender = () => {
-    componentKey.value += 1
-}
 
 type CharacterList = {
     name: String
@@ -77,7 +74,7 @@ type CharacterList = {
     content: typeof CharacterSheet
 }
 
-export default {
+export default defineComponent({
     components: { CharacterSheet },
 
     data() {
@@ -142,7 +139,7 @@ export default {
             }
         }
     }
-}
+})
 </script>
 
 <style scoped>

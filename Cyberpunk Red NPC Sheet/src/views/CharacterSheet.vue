@@ -128,6 +128,9 @@
         <v-btn color="#CD2417" variant="outlined" class="mt-5" @click="dialog = true">
             Take Damage
         </v-btn>
+        <v-btn color="#7286A0" variant="outlined" class="mt-5" @click="dialogSkills = true">
+            Check Skills
+        </v-btn>
         <v-dialog v-model="dialog" width="500" height="360">
             <v-card>
                 <template v-slot:title>
@@ -166,10 +169,70 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+        <v-dialog v-model="dialogSkills" width="1000" height="600">
+            <v-card>
+                <template v-slot:title>
+                    <div style="text-align: center">Skills</div>
+                    <v-divider class="mb-3" />
+                </template>
+                <div class="d-flex flex-row">
+                    <v-tabs direction="vertical" color="#CD2417" v-model="tabModel">
+                        <v-tab value="awareness">Awareness</v-tab>
+                        <v-tab value="body">Body</v-tab>
+                        <v-tab value="control">Control</v-tab>
+                        <v-tab value="education">Education</v-tab>
+                        <v-tab value="fighting">Fighting</v-tab>
+                        <v-tab value="performance">Performance</v-tab>
+                        <v-tab value="ranged weapon">Ranged Weapon</v-tab>
+                        <v-tab value="social">Social</v-tab>
+                        <v-tab value="technique">Technique</v-tab>
+                    </v-tabs>
+                    <v-divider vertical />
+                    <v-window v-model="tabModel" style='width: 75%'>
+                        <v-window-item value="awareness">
+                            <v-data-table-virtual
+                                :headers="headers"
+                                :items="desserts"
+                                item-value="name"
+                            >
+                            </v-data-table-virtual>
+                        </v-window-item>
+                        <v-window-item value="body">
+                            <v-icon icon="fa:fas fa-search"></v-icon>
+                        </v-window-item>
+                        <v-window-item value="control">
+                            control
+                        </v-window-item>
+                        <v-window-item value="education">
+                            education
+                        </v-window-item>
+                        <v-window-item value="fighting">
+                            fighting
+                        </v-window-item>
+                        <v-window-item value="performance">
+                            performance
+                        </v-window-item>
+                        <v-window-item value="ranged weapon">
+                            ranged weapon
+                        </v-window-item>
+                        <v-window-item value="social">
+                            social
+                        </v-window-item>
+                        <v-window-item value="technique">
+                            technique
+                        </v-window-item>
+                    </v-window>
+                </div>
+                <v-card-actions class="justify-center">
+                    <v-btn color="red" @click="dialogSkills = false">Close</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue';
 import Character from '@/models/character'
 import ArmorHandler from '@/handlers/armorHandler'
 import DamageHandler from '@/handlers/damageHandler'
@@ -191,7 +254,7 @@ type CharacterLocalStorage = {
     shield: Number
 }
 
-export default {
+export default defineComponent({
     props: {
         characterKey: { type: String, require: true },
         characterName: { type: String, require: true }
@@ -216,10 +279,51 @@ export default {
             isDamagingShield: false,
             char: new Character(),
             dialog: false,
+            dialogSkills: false,
+            tabModel: 'awareness',
             headArmor: 0,
             bodyArmor: 0,
             shield: 0,
-            characterData: {} as CharacterLocalStorage
+            characterData: {} as CharacterLocalStorage,
+            headers: [
+                { title: 'Skill', key: 'skill' },
+                { title: 'LVL', key: 'lvl' },
+                { title: 'STAT', key: 'stat' },
+                { title: 'BASE', key: 'base' },
+                { title: 'Actions', key: 'actions'}
+            ],
+            desserts: [
+                {
+                    skill: 'Concentration',
+                    lvl: 4,
+                    stat: 5,
+                    base: 9,
+                },
+                {
+                    skill: 'Conceal/Reveal Object',
+                    lvl: 4,
+                    stat: 5,
+                    base: 9,
+                },
+                {
+                    skill: 'Lip Reading',
+                    lvl: 4,
+                    stat: 5,
+                    base: 9,
+                },
+                {
+                    skill: 'Perception',
+                    lvl: 4,
+                    stat: 5,
+                    base: 9,
+                },
+                {
+                    skill: 'Tracking',
+                    lvl: 4,
+                    stat: 5,
+                    base: 9,
+                }
+            ]
         }
     },
 
@@ -278,7 +382,7 @@ export default {
             this.isAmmoPiercing = false
             this.isDamagingShield = false
         },
-        getDataLocalStorage() {
+        getDataLocalStorage(): string {
             return JSON.stringify({
                 name: this.characterName,
                 characterInt: this.textFieldINT,
@@ -387,7 +491,7 @@ export default {
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         }
     }
-}
+})
 </script>
 
 <style scoped>
