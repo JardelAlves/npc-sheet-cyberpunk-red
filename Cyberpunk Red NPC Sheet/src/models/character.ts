@@ -1,9 +1,10 @@
 import CharacterRole from "./characterRoles";
-import CharacterSkills from "./characterSkills";
 import CharacterStats from "./characterStats";
 import CharacterArmor from "./characterArmor";
 import ArmorHandler from "@/handlers/armorHandler";
 import DamageHandler from "@/handlers/damageHandler";
+
+import { type SkillsType, Skills } from '@/schemas/skill.schema';
 
 /**
  * @todo Documentar classes
@@ -13,12 +14,12 @@ export default class Character {
     public stats: CharacterStats;
     public hitPoints!: number;
     public humanity!: number;
-    public skills: typeof CharacterSkills;
+    public skills: SkillsType;
     public armor: CharacterArmor;
 
     constructor() {
         this.stats = new CharacterStats;
-        this.skills = CharacterSkills;
+        this.skills = Skills
         this.armor = new CharacterArmor;
     }
 

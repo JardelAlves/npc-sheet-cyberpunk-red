@@ -170,63 +170,11 @@
             </v-card>
         </v-dialog>
         <v-dialog v-model="dialogSkills" width="1000" height="600">
-            <v-card>
-                <template v-slot:title>
-                    <div style="text-align: center">Skills</div>
-                    <v-divider class="mb-3" />
-                </template>
-                <div class="d-flex flex-row">
-                    <v-tabs direction="vertical" color="#CD2417" v-model="tabModel">
-                        <v-tab value="awareness">Awareness</v-tab>
-                        <v-tab value="body">Body</v-tab>
-                        <v-tab value="control">Control</v-tab>
-                        <v-tab value="education">Education</v-tab>
-                        <v-tab value="fighting">Fighting</v-tab>
-                        <v-tab value="performance">Performance</v-tab>
-                        <v-tab value="ranged weapon">Ranged Weapon</v-tab>
-                        <v-tab value="social">Social</v-tab>
-                        <v-tab value="technique">Technique</v-tab>
-                    </v-tabs>
-                    <v-divider vertical />
-                    <v-window v-model="tabModel" style='width: 75%'>
-                        <v-window-item value="awareness">
-                            <v-data-table-virtual
-                                :headers="headers"
-                                :items="desserts"
-                                item-value="name"
-                            >
-                            </v-data-table-virtual>
-                        </v-window-item>
-                        <v-window-item value="body">
-                            <v-icon icon="fa:fas fa-search"></v-icon>
-                        </v-window-item>
-                        <v-window-item value="control">
-                            control
-                        </v-window-item>
-                        <v-window-item value="education">
-                            education
-                        </v-window-item>
-                        <v-window-item value="fighting">
-                            fighting
-                        </v-window-item>
-                        <v-window-item value="performance">
-                            performance
-                        </v-window-item>
-                        <v-window-item value="ranged weapon">
-                            ranged weapon
-                        </v-window-item>
-                        <v-window-item value="social">
-                            social
-                        </v-window-item>
-                        <v-window-item value="technique">
-                            technique
-                        </v-window-item>
-                    </v-window>
-                </div>
-                <v-card-actions class="justify-center">
-                    <v-btn color="red" @click="dialogSkills = false">Close</v-btn>
-                </v-card-actions>
-            </v-card>
+            <skills-modal
+                :character-skills="char.skills"
+                @edit-skill="editSkill"
+                @close="closeSkillsDialog"
+            />
         </v-dialog>
     </div>
 </template>
@@ -236,6 +184,8 @@ import { defineComponent } from 'vue';
 import Character from '@/models/character'
 import ArmorHandler from '@/handlers/armorHandler'
 import DamageHandler from '@/handlers/damageHandler'
+import SkillsModal from '@/components/SkillsModal.vue'
+import { setAllBaseStatRank } from '@/helpers/skills.handlers'
 
 type CharacterLocalStorage = {
     characterInt: Number
@@ -255,6 +205,7 @@ type CharacterLocalStorage = {
 }
 
 export default defineComponent({
+    components: { SkillsModal },
     props: {
         characterKey: { type: String, require: true },
         characterName: { type: String, require: true }
@@ -284,46 +235,7 @@ export default defineComponent({
             headArmor: 0,
             bodyArmor: 0,
             shield: 0,
-            characterData: {} as CharacterLocalStorage,
-            headers: [
-                { title: 'Skill', key: 'skill' },
-                { title: 'LVL', key: 'lvl' },
-                { title: 'STAT', key: 'stat' },
-                { title: 'BASE', key: 'base' },
-                { title: 'Actions', key: 'actions'}
-            ],
-            desserts: [
-                {
-                    skill: 'Concentration',
-                    lvl: 4,
-                    stat: 5,
-                    base: 9,
-                },
-                {
-                    skill: 'Conceal/Reveal Object',
-                    lvl: 4,
-                    stat: 5,
-                    base: 9,
-                },
-                {
-                    skill: 'Lip Reading',
-                    lvl: 4,
-                    stat: 5,
-                    base: 9,
-                },
-                {
-                    skill: 'Perception',
-                    lvl: 4,
-                    stat: 5,
-                    base: 9,
-                },
-                {
-                    skill: 'Tracking',
-                    lvl: 4,
-                    stat: 5,
-                    base: 9,
-                }
-            ]
+            characterData: {} as CharacterLocalStorage
         }
     },
 
@@ -376,6 +288,14 @@ export default defineComponent({
             }
             this.resetDamageConditions()
         },
+        editSkill(teste: string, teste1: string, teste2: number) {
+            console.log(teste, teste1, teste2);
+            this.char.skills[teste][teste1].setSkillRank(teste2)
+            console.log(this.char.skills[teste][teste1])
+        },
+        closeSkillsDialog() {
+            this.dialogSkills = false;
+        },
         resetDamageConditions() {
             this.damageTaken = 0
             this.isMeleeDamage = false
@@ -407,11 +327,20 @@ export default defineComponent({
         const teste = localStorage.getItem(this.characterKey!)
         if (teste !== undefined) {
             const final = JSON.parse(teste!)
+            console.log(final)
             this.bodyArmor = final.bodyArmor
             this.headArmor = final.headArmor
             this.shield = final.shield
-            this.textFieldBODY = final.characterBody
+            this.textFieldINT = final.characterInt
+            this.textFieldREF = final.characterRef
+            this.textFieldDEX = final.characterDex
+            this.textFieldTECH = final.characterTech
+            this.textFieldCOOL = final.characterCool
             this.textFieldWILL = final.characterWill
+            this.textFieldLUCK = final.characterLuck
+            this.textFieldMOVE = final.characterMove
+            this.textFieldBODY = final.characterBody
+            this.textFieldEMP = final.characterEmp
             this.char.armor.setBodyArmor('Body Armor', 'BODY', final.bodyArmor, 0)
             this.char.armor.setHeadArmor('Head Armor', 'HEAD', final.headArmor, 0)
             this.currentHitPoints = final.currentHitPoints
@@ -427,36 +356,58 @@ export default defineComponent({
         textFieldINT(newValue: string) {
             if (newValue.length === 0) newValue = '0'
             this.char.stats.setIntStat(parseInt(newValue))
+            Object.keys(this.char.skills).forEach((stat) => {
+                setAllBaseStatRank(this.char.skills[stat], { stat: 'INT', rank: Number(newValue) })
+            })
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
         textFieldREF(newValue: string) {
             if (newValue.length === 0) newValue = '0'
             this.char.stats.setRefStat(parseInt(newValue))
+            Object.keys(this.char.skills).forEach((stat) => {
+                setAllBaseStatRank(this.char.skills[stat], { stat: 'REF', rank: Number(newValue) })
+            })
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
         textFieldDEX(newValue: string) {
             if (newValue.length === 0) newValue = '0'
             this.char.stats.setDexStat(parseInt(newValue))
+            Object.keys(this.char.skills).forEach((stat) => {
+                setAllBaseStatRank(this.char.skills[stat], { stat: 'DEX', rank: Number(newValue) })
+            })
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
         textFieldTECH(newValue: string) {
+            if (newValue.length === 0) newValue = '0'
             this.char.stats.setTechStat(parseInt(newValue))
+            Object.keys(this.char.skills).forEach((stat) => {
+                setAllBaseStatRank(this.char.skills[stat], { stat: 'TECH', rank: Number(newValue) })
+            })
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
         textFieldCOOL(newValue: string) {
             if (newValue.length === 0) newValue = '0'
             this.char.stats.setCoolStat(parseInt(newValue))
+            Object.keys(this.char.skills).forEach((stat) => {
+                setAllBaseStatRank(this.char.skills[stat], { stat: 'COOL', rank: Number(newValue) })
+            })
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
         textFieldWILL(newValue: string) {
             if (newValue.length === 0) newValue = '0'
             this.char.stats.setWillStat(parseInt(newValue))
+            Object.keys(this.char.skills).forEach((stat) => {
+                setAllBaseStatRank(this.char.skills[stat], { stat: 'WILL', rank: Number(newValue) })
+            })
             this.char.setHitPoints()
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
         textFieldLUCK(newValue: string) {
             if (newValue.length === 0) newValue = '0'
             this.char.stats.setLuckStat(parseInt(newValue))
+            Object.keys(this.char.skills).forEach((stat) => {
+                setAllBaseStatRank(this.char.skills[stat], { stat: 'LUCK', rank: Number(newValue) })
+            })
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
         textFieldMOVE(newValue: string) {
@@ -467,12 +418,18 @@ export default defineComponent({
         textFieldBODY(newValue: string) {
             if (newValue.length === 0) newValue = '0'
             this.char.stats.setBodyStat(parseInt(newValue))
+            Object.keys(this.char.skills).forEach((stat) => {
+                setAllBaseStatRank(this.char.skills[stat], { stat: 'BODY', rank: Number(newValue) })
+            })
             this.char.setHitPoints()
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
         textFieldEMP(newValue: string) {
             if (newValue.length === 0) newValue = '0'
             this.char.stats.setEmpStat(parseInt(newValue))
+            Object.keys(this.char.skills).forEach((stat) => {
+                setAllBaseStatRank(this.char.skills[stat], { stat: 'EMP', rank: Number(newValue) })
+            })
             localStorage.setItem(this.characterKey!, this.getDataLocalStorage())
         },
         bodyArmor(newValue: number) {
