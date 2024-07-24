@@ -7,6 +7,7 @@
 <!--      :meta="meta"-->
 <!--    />-->
     <stats-block />
+    <characters-block />
   </q-page>
 </template>
 
@@ -15,6 +16,7 @@
 // import { Todo, Meta } from 'components/models';
 // import ExampleComponent from 'components/ExampleComponent.vue';
 import StatsBlock from 'components/StatsBlock/StatsBlock.vue';
+import CharactersBlock from 'components/CharactersBlock/CharactersBlock.vue';
 
 defineOptions({
   name: 'IndexPage'
